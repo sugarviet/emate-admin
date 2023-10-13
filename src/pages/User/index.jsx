@@ -147,6 +147,11 @@ const User = () => {
     }
 
     rechargeWallet(data)
+
+    setWalletValues({
+      ...walletValues,
+      [record._id]: '',
+    });
   }
 
 
@@ -189,9 +194,23 @@ const User = () => {
       ),
     },
     {
-      title: 'Wallet',
+      title: 'Current Wallet',
       dataIndex: 'wallet',
       key: 'wallet',
+      // render: (wallet, record) => (
+      //   <Input
+      //     type='number'
+      //     value={walletValues[record._id] || wallet}
+      //     onChange={(e) =>
+      //       handleChangeWallet(e, record)
+      //     }
+      //     onBlur={() => handleOnBlurChange(record)}
+      //   />
+      // )
+    },
+    {
+      title: 'Update',
+      key: 'update',
       render: (wallet, record) => (
         <Input
           type='number'
@@ -218,7 +237,7 @@ const User = () => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Link to={`/user/${record.email}`}>View Details</Link>
+          <Link to={`/user/${record._id}`}>View Details</Link>
         </Space>
       ),
     },

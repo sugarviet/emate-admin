@@ -2,7 +2,7 @@ import { Card, DatePicker, Divider } from "antd";
 import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
-// import { useGetAllRevenues } from "../../../../../../services/Revenue/services";
+import { useGetAllRevenues } from "../../../../../../services/Revenue/services";
 
 const { RangePicker } = DatePicker;
 const { Meta } = Card;
@@ -16,13 +16,13 @@ const Revenue = () => {
   // ), endDate.format(
   //   "YYYY/MM/DD"
   // ));
-  // console.log('dataRevenues', dataRevenues);
 
-  // console.log("startDate", startDate);
-  // console.log("endDate", endDate);
+  console.log("startDate", startDate);
+  console.log("endDate", endDate);
 
   const handleChange = (dates) => {
     const [start, end] = dates;
+    console.log(dates);
     setStartDate(dayjs(start));
     setEndDate(dayjs(end));
   };
@@ -127,13 +127,15 @@ const Revenue = () => {
   const series = [
     {
       name: "Revenue",
-      data: formatDataForSeriesA(),
+      // data: formatDataForSeriesA(),
+      data:  [4230, 42730, 42730, 4730, 2730, 42730, 4273, 4230]
     },
   ];
 
   // if(isLoading){
   //   return <div>Loading...</div>
   // }
+
 
   return (
     <div>

@@ -49,32 +49,38 @@ const UserDetail = () => {
   const { userId } = useParams();
   const {data:user, isLoading} = useGetUserDetail(userId);
 
+  console.log('user', user);
+
+  if(isLoading){
+    return <>Loading...</>
+  }
+
   const items = [
     {
       key: '1',
       label: 'Email',
-      children: 'nguyen@gmail.com',
+      children: user.email,
     },
     {
       key: '2',
       label: 'Rating',
-      children: 2,
+      children: user.rating ? user.rating : 'Not yet',
     },
     {
       key: '3',
       label: 'Education',
-      children: 'YES',
+      children: user.education ? user.education : 'Not yet',
     },
     {
       key: '4',
       label: 'Education',
-      children: 'University of Information Technology.',
+      children: user.education ? user.education : 'Not yet',
       span: 2
     },
     {
       key: '5',
       label: 'Role',
-      children: 'Mentor',
+      children: `${user.role[0].name} ${user.role[1]?.name ? user.role[1].name : ""}`,
       span: 2,
     },
     {
@@ -86,7 +92,7 @@ const UserDetail = () => {
     {
       key: '7',
       label: 'Wallet',
-      children: <Input placeholder="" value={10}/>
+      children: <Input placeholder="" value={user.wallet}/>
     }
   ];
 
@@ -95,12 +101,8 @@ const UserDetail = () => {
   }
 
 
-
-  console.log('userDetail', user);
-
   return (
     <main style={{ minHeight: "90vh" }}>
-      <h1>Hello {userId}</h1>
       <Descriptions title="User Info" bordered items={items} />
 
       <Divider />
