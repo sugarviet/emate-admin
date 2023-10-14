@@ -5,6 +5,7 @@ import User from "../pages/User"
 import UserDetail from "../pages/UserDetail"
 import Wallet from "../pages/Wallet"
 import RequestCastPage from "../pages/RequestCash"
+import OrderTotalPage from "../pages/OrderTotal"
 
 const Routers = () => {
   return (
@@ -15,6 +16,7 @@ const Routers = () => {
         <Route path={URL_ENDPOINT.USER_DETAIL} element={<UserDetail />}/>
         <Route path={URL_ENDPOINT.WALLET} element={<Wallet />}/>
         <Route path={URL_ENDPOINT.REQUEST_CASH} element={<RequestCastPage />}/>
+        <Route path={URL_ENDPOINT.ORDER} element={<OrderTotalPage />}/>
 
       </Routes>
     </div>

@@ -23,6 +23,7 @@ import React from "react";
       getItem("Dashboard", "1", <LineChartOutlined />, "/", null, ""),
       getItem("Users", "2", <UserOutlined />, "/user", null, ""),
       getItem("Request Cash", "3", <DollarCircleOutlined />, "/request-cash", null, ""),
+      getItem("Orders", "4", <DollarCircleOutlined />, "/order", null, ""),
 
 
     ];
