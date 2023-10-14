@@ -3,7 +3,7 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/ico
 import { Avatar, Card } from 'antd';
 const { Meta } = Card;
 
-const UserCourse = () => {
+const UserCourse = ({course}) => {
   return (
     <Card
     style={{
@@ -11,8 +11,10 @@ const UserCourse = () => {
     }}
     cover={
       <img
+        width={250}
+        height={200}
         alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        src={course.image}
       />
     }
     actions={[
@@ -23,8 +25,8 @@ const UserCourse = () => {
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="Card title"
-      description="This is the description"
+      title={<p style={{fontWeight: 'bold'}}>Name: {course.name}</p>}
+      description={<p style={{fontWeight: 'bold'}}>Price: {course.price}</p>}
     />
   </Card>
   )

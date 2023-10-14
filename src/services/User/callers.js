@@ -20,3 +20,12 @@ export const updateUserWallet = async (data) => {
 
   return res.data
 }
+
+// http://localhost:8080/course/tutor/650ffd11ecf7190320d57aa3
+
+export const getCourseByUser = async (userId) => {
+
+  const res = await axios.get(`${API.API_GET_COURSE_BY_USER}/${userId}`);
+
+  return res.data.metaData
+}

@@ -17,5 +17,6 @@ export const API_ENDPOINT_QUERY = {
     USER_DETAIL: '/getDetail/:userId',
     RECHARGE_WALLET: '/recharge/:userId',
     GET_ALL_REQUEST_COIN: "/requestCoin/all",
-    GET_REVENUE_ADMIN: "/revenue/rangeDate"
+    GET_REVENUE_ADMIN: "/revenue/rangeDate",
+    GET_COURSE_BY_USER: "/course/mentor"
 }

@@ -1,16 +1,24 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getUserDetail, getUsers, updateUserWallet } from "./callers";
+import { getUserDetail, getUsers, updateUserWallet, getCourseByUser } from "./callers";
 import { notification } from "antd";
 
 const API_KEY = {
   GET_ALL_USERS: "users",
-  GET_USER_DETAIL: "user"
+  GET_USER_DETAIL: "user",
+  GET_COURSE_BY_USER: "course-user"
 };
 
 export const useGetAllUsers = () => {
   return useQuery({
     queryKey: [API_KEY.GET_ALL_USERS],
     queryFn: () => getUsers(),
+  });
+};
+
+export const useGetCourseUsers = (userId) => {
+  return useQuery({
+    queryKey: [API_KEY.GET_COURSE_BY_USER],
+    queryFn: () => getCourseByUser(userId),
   });
 };
 
