@@ -21,6 +21,13 @@ export const updateUserWallet = async (data) => {
   return res.data
 }
 
+export const withDrawUserWallet = async (data) => {
+
+  const res = await axios.put(urlcat(API.API_WITHDRAW_WALLET, {userId: data._id}), {wallet: data.wallet});
+
+  return res.data
+}
+
 // http://localhost:8080/course/tutor/650ffd11ecf7190320d57aa3
 
 export const getCourseByUser = async (userId) => {

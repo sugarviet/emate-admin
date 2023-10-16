@@ -1,11 +1,25 @@
-import { Table } from "antd";
+import { Table, Button } from "antd";
 import React from "react";
-import { useGetAllPendingRequest } from "../../services/RequestCoin/services";
+import { useGetAllPendingRequest, useApproveRequest } from "../../services/RequestCoin/services";
 import Loading from "../../components/Loading/Loading";
 
+const button = {
+  checked: {
+
+  }
+}
+
 const RequestCastPage = () => {
+  const {mutate: approveRequest} = useApproveRequest();
   const {data, isLoading} = useGetAllPendingRequest();
-  console.log(data);
+
+  const handleApproveRequest = (record) => {
+    approveRequest({
+      requestID: record._id,
+      user: record.user
+    })
+
+  }
 
   const columns = [
     {
@@ -22,6 +36,24 @@ const RequestCastPage = () => {
       title: "Price",
       dataIndex: 'price',
       key: 'price',
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (text, record) => {
+        console.log('check', record.checked);
+        return (
+          !record.checked ? (
+            <Button type="primary" onClick={() => handleApproveRequest(record)}>
+              Approve
+            </Button>
+          ) : (
+            <Button disabled={true}>
+              Approved
+            </Button>
+          )
+        )
+      },
     },
    
   ];

@@ -6,3 +6,9 @@ export const getRequestCoin = async () => {
   
     return res.data.metaData;
   };
+
+  export const approveRequest = async (data) => {
+    const res = await axios.put(API.API_APPROVE_REQUEST, data);
+  
+    return res.data;
+  };

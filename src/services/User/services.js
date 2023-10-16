@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getUserDetail, getUsers, updateUserWallet, getCourseByUser } from "./callers";
+import { getUserDetail, getUsers, updateUserWallet, getCourseByUser, withDrawUserWallet } from "./callers";
 import { notification } from "antd";
 
 const API_KEY = {
@@ -33,6 +33,24 @@ export const useRechargeWallet = () => {
   const queryClient = useQueryClient();
 
   return useMutation(updateUserWallet, {
+    onSuccess: () => {
+      notification.success({
+        message: "Updated user wallet successfully"
+      })
+      queryClient.invalidateQueries(API_KEY.GET_ALL_USERS);
+    },
+    onError: () => {
+      notification.error({
+        message: "Updated user wallet unsuccessfully"
+      })
+    },
+  });
+}
+
+export const useWithDrawWallet = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(withDrawUserWallet, {
     onSuccess: () => {
       notification.success({
         message: "Updated user wallet successfully"

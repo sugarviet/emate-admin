@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetCourseUsers, useGetUserDetail } from "../../services/User/services";
 import Loading from "../../components/Loading/Loading";
-import { Descriptions, Tag, Badge, Input, Divider, List } from 'antd';
+import { Descriptions, Input, Divider, List } from 'antd';
 import UserCourse from "../../components/UserCourse";
 
 

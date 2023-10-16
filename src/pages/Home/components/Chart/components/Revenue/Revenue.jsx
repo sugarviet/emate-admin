@@ -2,7 +2,7 @@ import { Card, DatePicker, Divider } from "antd";
 import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
-import { useGetAllRevenues } from "../../../../../../services/Revenue/services";
+import { useGetListByDate } from "../../../../../../services/Home/services";
 
 const { RangePicker } = DatePicker;
 const { Meta } = Card;
@@ -11,18 +11,12 @@ const Revenue = () => {
   const [startDate, setStartDate] = useState(dayjs().startOf("week"));
   const [endDate, setEndDate] = useState(dayjs());
 
-  // const { data: dataRevenues, isLoading } = useGetAllRevenues(startDate.format(
-  //   "YYYY/MM/DD"
-  // ), endDate.format(
-  //   "YYYY/MM/DD"
-  // ));
+  const {data, mutate} = useGetListByDate()
 
-  console.log("startDate", startDate);
-  console.log("endDate", endDate);
+  const profitArray = data?.listRevenue.map(revenue => revenue.profit);
 
   const handleChange = (dates) => {
     const [start, end] = dates;
-    console.log(dates);
     setStartDate(dayjs(start));
     setEndDate(dayjs(end));
   };
@@ -33,47 +27,30 @@ const Revenue = () => {
     }
   };
 
-  // const handleDateChange = (dates) => {
-  //   if (dates && dates.length === 2) {
-  //     const [start, end] = dates;
-  //     setStartDate(dayjs(start));
-  //     setEndDate(dayjs(end));
-  //   } else {
-  //     return;
-  //   }
-  // };
-
   const handleDateChange = (dates) => {
     if (dates && dates.length === 2) {
       const [start, end] = dates;
       const newStartDate = dayjs(start);
       const newEndDate = dayjs(end);
 
-      // Check if the selected range is exactly 7 days
-      if (newEndDate.diff(newStartDate, "day") !== 6) {
-        return;
-      }
 
       setStartDate(newStartDate);
       setEndDate(newEndDate);
     }
   };
 
-  const formatDataForSeriesA = () => {
-    const formattedData = Array(7).fill(0);
-
-    // dataRevenues?.data.forEach((revenue) => {
-    //   const dayOfWeek = dayjs(revenue.date).day();
-    //   formattedData[dayOfWeek] += revenue.amount;
-    // });
-
-    return formattedData;
-  };
-
 
   useEffect(() => {
-    // console.log("Start Date:", startDate);
-    // console.log("End Date:", endDate);
+    mutate({
+      startDay: startDate.format(
+        "DD-MM-YYYY"
+      ),
+    endDay: endDate.format(
+      "DD-MM-YYYY"
+    ),
+    user: "Admin",
+    isEmate: true
+    })
   }, [startDate, endDate]);
 
   const options = {
@@ -128,13 +105,10 @@ const Revenue = () => {
     {
       name: "Revenue",
       // data: formatDataForSeriesA(),
-      data:  [4230, 42730, 42730, 4730, 2730, 42730, 4273, 4230]
+      // data:  [4230, 42730, 42730, 4730, 2730, 42730, 4273, 4230]
+      data: profitArray
     },
   ];
-
-  // if(isLoading){
-  //   return <div>Loading...</div>
-  // }
 
 
   return (

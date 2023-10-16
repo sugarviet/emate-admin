@@ -18,9 +18,14 @@ export const URL_ENDPOINT = {
 export const API_ENDPOINT_QUERY = {
     USER_DETAIL: '/getDetail/:userId',
     RECHARGE_WALLET: '/recharge/:userId',
+    WITHDRAW_WALLET: '/withdraw/:userId',
     GET_ALL_REQUEST_COIN: "/requestCoin/all",
     GET_REVENUE_ADMIN: "/revenue/rangeDate",
     GET_COURSE_BY_USER: "/course/mentor",
-    GET_ALL_ORDERS: "/order"
+    GET_ALL_ORDERS: "/order",
+    GET_ORDER_DETAIL: "/order/:orderId",
+    APPROVE_REQUEST: "/requestCoin",
+    GET_ALL_REPORT_LIST: "/revenue/parameters",
+    GET_REVENUE_BY_DATE: "/revenue/rangeDate"
 
 }

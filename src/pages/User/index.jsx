@@ -1,5 +1,5 @@
 import Loading from '../../components/Loading/Loading';
-import { useGetAllUsers, useRechargeWallet } from '../../services/User/services'
+import { useGetAllUsers, useRechargeWallet, useWithDrawWallet } from '../../services/User/services'
 import styles from './User.module.css'
 import { Table, Tag, Space, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
@@ -18,10 +18,19 @@ const ROLE = {
   }
 }
 
+const WALLET = {
+  RECHARGE: "recharge",
+  WITHDRAW: "withdraw",
+}
+
 const User = () => {
   const {data, isLoading } = useGetAllUsers();
   const [walletValues, setWalletValues] = useState({});
+  const [withdrawWalletValues, setWithdrawWalletValues] = useState({});
+
   const {mutate: rechargeWallet} = useRechargeWallet();
+  const {mutate: withdrawWallet} = useWithDrawWallet();
+
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
@@ -138,20 +147,41 @@ const User = () => {
     })
   }
 
-  const handleOnBlurChange = (record) => {
+  const handleWithdrawWallet = (e, record) => {
+    setWithdrawWalletValues({
+      ...withdrawWalletValues,
+      [record._id]: e.target.value,
+    })
+  }
+
+  const handleOnBlurChange = (record, type) => {
     const newValue = parseInt(walletValues[record._id]);
+    const withdrawValue = parseInt(withdrawWalletValues[record._id]);
+
 
     const data = {
       _id: record._id,
-      wallet: newValue
+      wallet: newValue || withdrawValue
     }
 
-    rechargeWallet(data)
+    console.log(data);
+    
+    if(type === WALLET.RECHARGE){
+      rechargeWallet(data);
+    }
+    if(type === WALLET.WITHDRAW){
+      withdrawWallet(data);
+    }
 
     setWalletValues({
       ...walletValues,
       [record._id]: '',
     });
+    setWithdrawWalletValues({
+      ...withdrawWalletValues,
+      [record._id]: '',
+
+    })
   }
 
 
@@ -164,7 +194,7 @@ const User = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: '30%',
+      width: '20%',
       ...getColumnSearchProps('name'),
       
     },
@@ -172,7 +202,7 @@ const User = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      width: '30%',
+      width: '20%',
       ...getColumnSearchProps('email'),
      
     },
@@ -180,6 +210,7 @@ const User = () => {
       title: 'Role',
       dataIndex: 'role',
       key: 'role',
+      width: '10%',
       render: (roles) => (
         <>
     {roles.map((role) => (
@@ -197,19 +228,9 @@ const User = () => {
       title: 'Current Wallet',
       dataIndex: 'wallet',
       key: 'wallet',
-      // render: (wallet, record) => (
-      //   <Input
-      //     type='number'
-      //     value={walletValues[record._id] || wallet}
-      //     onChange={(e) =>
-      //       handleChangeWallet(e, record)
-      //     }
-      //     onBlur={() => handleOnBlurChange(record)}
-      //   />
-      // )
     },
     {
-      title: 'Update',
+      title: 'Plus',
       key: 'update',
       render: (wallet, record) => (
         <Input
@@ -218,7 +239,21 @@ const User = () => {
           onChange={(e) =>
             handleChangeWallet(e, record)
           }
-          onBlur={() => handleOnBlurChange(record)}
+          onBlur={() => handleOnBlurChange(record, WALLET.RECHARGE)}
+        />
+      )
+    },
+    {
+      title: 'Minus',
+      key: 'withdraw',
+      render: (wallet, record) => (
+        <Input
+          type='number'
+          value={withdrawWalletValues[record._id] || wallet}
+          onChange={(e) =>
+            handleWithdrawWallet(e, record)
+          }
+          onBlur={() => handleOnBlurChange(record, WALLET.WITHDRAW)}
         />
       )
     },
@@ -235,6 +270,7 @@ const User = () => {
     {
       title: 'Action',
       key: 'action',
+      width: '10%',
       render: (text, record) => (
         <Space size="middle">
           <Link to={`/user/${record._id}`}>View Details</Link>
